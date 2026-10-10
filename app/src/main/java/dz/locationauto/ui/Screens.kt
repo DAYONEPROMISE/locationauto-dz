@@ -18,7 +18,7 @@ import dz.locationauto.data.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppRoot(vm: MainViewModel) {
+fun AppRoot(vm: MainViewModel, dark: Boolean = false, onToggleDark: () -> Unit = {}) {
     var tab by remember { mutableIntStateOf(0) }
     val titles = listOf(
         stringResource(R.string.tab_contracts),
@@ -26,35 +26,63 @@ fun AppRoot(vm: MainViewModel) {
         stringResource(R.string.tab_clients),
         stringResource(R.string.tab_returns)
     )
-    Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
-        bottomBar = {
-            NavigationBar {
-                titles.forEachIndexed { i, t ->
-                    NavigationBarItem(
-                        selected = tab == i, onClick = { tab = i },
-                        icon = {
+    val icons = listOf(
+        Icons.Default.Description, Icons.Default.DirectionsCar,
+        Icons.Default.People, Icons.Default.AssignmentReturn
+    )
+    BoxWithConstraints {
+        val wide = maxWidth >= 600.dp
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.app_name)) },
+                    actions = {
+                        IconButton(onClick = onToggleDark) {
                             Icon(
-                                when (i) {
-                                    0 -> Icons.Default.Description
-                                    1 -> Icons.Default.DirectionsCar
-                                    2 -> Icons.Default.People
-                                    else -> Icons.Default.AssignmentReturn
-                                }, null
+                                if (dark) Icons.Default.LightMode else Icons.Default.DarkMode,
+                                contentDescription = if (dark) "Mode clair" else "Mode sombre"
                             )
-                        },
-                        label = { Text(t) }
-                    )
+                        }
+                    }
+                )
+            },
+            bottomBar = {
+                if (!wide) {
+                    NavigationBar {
+                        titles.forEachIndexed { i, t ->
+                            NavigationBarItem(
+                                selected = tab == i, onClick = { tab = i },
+                                icon = { Icon(icons[i], contentDescription = t) },
+                                label = { Text(t) }
+                            )
+                        }
+                    }
                 }
-            }
-        }
-    ) { pad ->
-        Box(Modifier.padding(pad)) {
-            when (tab) {
-                0 -> ContractsScreen(vm)
-                1 -> VehiclesScreen(vm)
-                2 -> ClientsScreen(vm)
-                3 -> ReturnsScreen(vm)
+            },
+            floatingActionButton = { },
+            floatingActionButtonPosition = FabPosition.End
+        ) { pad ->
+            Row(Modifier.padding(pad).fillMaxSize()) {
+                if (wide) {
+                    NavigationRail {
+                        titles.forEachIndexed { i, t ->
+                            NavigationRailItem(
+                                selected = tab == i, onClick = { tab = i },
+                                icon = { Icon(icons[i], contentDescription = t) },
+                                label = { Text(t) }
+                            )
+                        }
+                    }
+                    VerticalDivider()
+                }
+                Box(Modifier.weight(1f).fillMaxHeight()) {
+                    when (tab) {
+                        0 -> ContractsScreen(vm)
+                        1 -> VehiclesScreen(vm)
+                        2 -> ClientsScreen(vm)
+                        else -> ReturnsScreen(vm)
+                    }
+                }
             }
         }
     }
