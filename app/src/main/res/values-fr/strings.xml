@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocationAutoDZ</string>
+    <string name="tab_contracts">Contrats</string>
+    <string name="tab_vehicles">Véhicules</string>
+    <string name="tab_clients">Clients</string>
+    <string name="tab_returns">Retours</string>
+    <string name="new_contract">Nouveau contrat</string>
+    <string name="add">Ajouter</string>
+    <string name="cancel">Annuler</string>
+    <string name="pdf">PDF</string>
+    <string name="days">Jours</string>
+    <string name="deposit">Caution (DZD)</string>
+    <string name="close_return">Clôturer le retour</string>
+    <string name="add_vehicle_client_first">Ajoutez d\'abord au moins un véhicule et un client.</string>
+    <string name="no_vehicle_available">Aucun véhicule disponible.</string>
+</resources>

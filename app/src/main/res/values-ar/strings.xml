@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocationAutoDZ</string>
+    <string name="tab_contracts">العقود</string>
+    <string name="tab_vehicles">السيارات</string>
+    <string name="tab_clients">الزبائن</string>
+    <string name="tab_returns">الإرجاع</string>
+    <string name="new_contract">عقد جديد</string>
+    <string name="add">إضافة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="pdf">PDF</string>
+    <string name="days">الأيام</string>
+    <string name="deposit">الضمان (دج)</string>
+    <string name="close_return">إغلاق الإرجاع</string>
+    <string name="add_vehicle_client_first">أضف سيارة وزبونًا أولاً.</string>
+    <string name="no_vehicle_available">لا توجد سيارة متاحة.</string>
+</resources>
