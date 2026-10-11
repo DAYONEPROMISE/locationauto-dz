@@ -43,14 +43,26 @@ jobs:
         run: |
           grep -a -E "Error|error:|e: .*\.kt|What went wrong|Caused by" build-lint.log | head -20 | cut -c1-500 | while IFS= read -r l; do echo "::error::$l"; done; true
       - name: Build debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:assembleDebug --stacktrace 2>&1 | tee build-assemble.log
+      - name: Surface assemble errors
+        if: failure()
+        run: |
+          grep -a -E "FAILED|error:|e: .*\.kt|What went wrong|Caused by|Execution failed|Duplicate" build-assemble.log | head -25 | cut -c1-500 | while IFS= read -r l; do echo "::error::$l"; done; true
       - name: Build release APK (unsigned)
-        run: ./gradlew :app:assembleRelease --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:assembleRelease --stacktrace 2>&1 | tee build-assemble-release.log
+      - name: Surface release assemble errors
+        if: failure()
+        run: |
+          grep -a -E "FAILED|error:|e: .*\.kt|What went wrong|Caused by|Execution failed|Duplicate" build-assemble-release.log | head -25 | cut -c1-500 | while IFS= read -r l; do echo "::error::$l"; done; true
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: locationautodz-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/debug/*.apk
       - name: Upload release APK artifact
         uses: actions/upload-artifact@v4
         with:
@@ -78,4 +90,4 @@ jobs:
           tag: v${{ env.APP_VERSION }}-b${{ github.run_number }}
           name: LocationAuto-DZ v${{ env.APP_VERSION }} (build ${{ github.run_number }})
           bodyFile: release-notes.md
-          artifacts: "app/build/outputs/apk/debug/app-debug.apk,app/build/outputs/apk/release/*.apk"
+          artifacts: "app/build/outputs/apk/debug/*.apk,app/build/outputs/apk/release/*.apk"
