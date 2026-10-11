@@ -14,4 +14,18 @@
     <string name="close_return">Clôturer le retour</string>
     <string name="add_vehicle_client_first">Ajoutez d\'abord au moins un véhicule et un client.</string>
     <string name="no_vehicle_available">Aucun véhicule disponible.</string>
+    <string name="pick_hint">Choisir un véhicule</string>
+    <string name="km_start">Km départ</string>
+    <string name="brand">Marque</string>
+    <string name="model">Modèle</string>
+    <string name="plate">Immatriculation</string>
+    <string name="rate_day">Tarif DZD/jour</string>
+    <string name="license">Permis N°</string>
+    <string name="depart_fmt">Départ: %1$d km / %2$d%% • %3$d DZD</string>
+    <string name="km_return">Km retour</string>
+    <string name="fuel_pct">Carburant %%</string>
+    <string name="extra_fees">Frais supp DZD</string>
+    <string name="rate_line">%1$d DZD/j • %2$s</string>
+    <string name="rented">Loué</string>
+    <string name="days_fmt">%1$d j • %2$d DZD • %3$s</string>
 </resources>

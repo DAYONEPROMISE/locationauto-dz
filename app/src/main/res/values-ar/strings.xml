@@ -14,4 +14,18 @@
     <string name="close_return">إغلاق الإرجاع</string>
     <string name="add_vehicle_client_first">أضف سيارة وزبونًا أولاً.</string>
     <string name="no_vehicle_available">لا توجد سيارة متاحة.</string>
+    <string name="pick_hint">اختر مركبة</string>
+    <string name="km_start">كيلومترات الانطلاق</string>
+    <string name="brand">العلامة</string>
+    <string name="model">الموديل</string>
+    <string name="plate">الترقيم</string>
+    <string name="rate_day">السعر دج/يوم</string>
+    <string name="license">رخصة رقم</string>
+    <string name="depart_fmt">الانطلاق: %1$d كم / %2$d%% • %3$d دج</string>
+    <string name="km_return">كيلومترات الإرجاع</string>
+    <string name="fuel_pct">الوقود %%</string>
+    <string name="extra_fees">رسوم إضافية دج</string>
+    <string name="rate_line">%1$d دج/يوم • %2$s</string>
+    <string name="rented">مؤجرة</string>
+    <string name="days_fmt">%1$d يوم • %2$d دج • %3$s</string>
 </resources>

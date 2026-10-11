@@ -14,4 +14,18 @@
     <string name="close_return">Close return</string>
     <string name="add_vehicle_client_first">Add at least one vehicle and one client first.</string>
     <string name="no_vehicle_available">No available vehicle.</string>
+    <string name="pick_hint">Choose a vehicle</string>
+    <string name="km_start">Start km</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="plate">Plate number</string>
+    <string name="rate_day">Rate DZD/day</string>
+    <string name="license">License No.</string>
+    <string name="depart_fmt">Start: %1$d km / %2$d%% • %3$d DZD</string>
+    <string name="km_return">Return km</string>
+    <string name="fuel_pct">Fuel %%</string>
+    <string name="extra_fees">Extra fees DZD</string>
+    <string name="rate_line">%1$d DZD/day • %2$s</string>
+    <string name="rented">Rented</string>
+    <string name="days_fmt">%1$d d • %2$d DZD • %3$s</string>
 </resources>
