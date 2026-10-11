@@ -109,9 +109,9 @@ fun ContractsScreen(vm: MainViewModel) {
                 val cl = clients.firstOrNull { it.id == c.clientId }
                 ElevatedCard(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                     Column(Modifier.padding(12.dp)) {
-                        Text("#${c.id} ${v?.brand} ${v?.model} — ${cl?.fullName ?: "?"}",
+                        Text("#${c.id} ${v?.brand} ${v?.model} \u2014 ${cl?.fullName ?: "?"}",
                             style = MaterialTheme.typography.titleSmall)
-                        Text("${c.days()} j • ${c.totalDzd()} DZD • ${c.status}")
+                        Text(stringResource(R.string.days_fmt, c.days(), c.totalDzd(), c.status))
                         Row {
                             TextButton(onClick = {
                                 if (v != null && cl != null) {
@@ -156,7 +156,7 @@ fun NewContractDialog(vm: MainViewModel, vehicles: List<Vehicle>, clients: List<
                 }
                 OutlinedTextField(days, { days = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.days)) })
                 OutlinedTextField(deposit, { deposit = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.deposit)) })
-                OutlinedTextField(km, { km = it.filter(Char::isDigit) }, label = { Text("Km départ") })
+                OutlinedTextField(km, { km = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.km_start)) })
             }
         },
         confirmButton = {
@@ -189,10 +189,10 @@ fun VehiclesScreen(vm: MainViewModel) {
     var plate by remember { mutableStateOf("") }
     var rate by remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize().padding(12.dp)) {
-        OutlinedTextField(brand, { brand = it }, label = { Text("Marque") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(model, { model = it }, label = { Text("Modèle") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(plate, { plate = it }, label = { Text("Immatriculation") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(rate, { rate = it.filter(Char::isDigit) }, label = { Text("Tarif DZD/jour") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(brand, { brand = it }, label = { Text(stringResource(R.string.brand)) }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(model, { model = it }, label = { Text(stringResource(R.string.model)) }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(plate, { plate = it }, label = { Text(stringResource(R.string.plate)) }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(rate, { rate = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.rate_day)) }, modifier = Modifier.fillMaxWidth())
         Button(
             onClick = {
                 vm.addVehicle(Vehicle(brand = brand.trim(), model = model.trim(), plate = plate.trim(), dailyRateDzd = rate.toLongOrNull() ?: 0))
@@ -205,7 +205,7 @@ fun VehiclesScreen(vm: MainViewModel) {
             items(vehicles) { v ->
                 ListItem(
                     headlineContent = { Text("${v.brand} ${v.model} (${v.plate})") },
-                    supportingContent = { Text("${v.dailyRateDzd} DZD/j • " + if (v.available) "OK" else "Loué") }
+                    supportingContent = { Text(stringResource(R.string.rate_line, v.dailyRateDzd, if (v.available) "OK" else stringResource(R.string.rented))) }
                 )
                 HorizontalDivider()
             }
@@ -220,9 +220,9 @@ fun ClientsScreen(vm: MainViewModel) {
     var phone by remember { mutableStateOf("") }
     var license by remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize().padding(12.dp)) {
-        OutlinedTextField(name, { name = it }, label = { Text("Nom complet / الاسم") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(phone, { phone = it }, label = { Text("Téléphone / هاتف") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(license, { license = it }, label = { Text("Permis N°") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(name, { name = it }, label = { Text("Nom complet / \u0627\u0644\u0627\u0633\u0645") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(phone, { phone = it }, label = { Text("T\u00e9l\u00e9phone / \u0647\u0627\u062a\u0641") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(license, { license = it }, label = { Text(stringResource(R.string.license)) }, modifier = Modifier.fillMaxWidth())
         Button(
             onClick = {
                 vm.addClient(Client(fullName = name.trim(), phone = phone.trim(), licenseNumber = license.trim()))
@@ -235,7 +235,7 @@ fun ClientsScreen(vm: MainViewModel) {
             items(clients) { c ->
                 ListItem(
                     headlineContent = { Text(c.fullName) },
-                    supportingContent = { Text("${c.phone} • ${c.licenseNumber}") }
+                    supportingContent = { Text("${c.phone} \u2022 ${c.licenseNumber}") }
                 )
                 HorizontalDivider()
             }
@@ -268,18 +268,18 @@ fun ReturnsScreen(vm: MainViewModel) {
                     )
                 ) {
                     Column(Modifier.padding(12.dp)) {
-                        Text("#${c.id} ${v?.brand} ${v?.model} — ${cl?.fullName}")
-                        Text("Départ: ${c.startKm} km / ${c.startFuelPercent}% • ${c.totalDzd()} DZD")
+                        Text("#${c.id} ${v?.brand} ${v?.model} \u2014 ${cl?.fullName}")
+                        Text(stringResource(R.string.depart_fmt, c.startKm, c.startFuelPercent, c.totalDzd()))
                     }
                 }
             }
         }
         val sel = active.firstOrNull { it.id == selectedId }
         if (sel != null) {
-            OutlinedTextField(endKm, { endKm = it.filter(Char::isDigit) }, label = { Text("Km retour") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(fuel, { fuel = it.filter(Char::isDigit) }, label = { Text("Carburant %") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(damages, { damages = it }, label = { Text("Dégâts / أضرار") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(extras, { extras = it.filter(Char::isDigit) }, label = { Text("Frais supp DZD") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(endKm, { endKm = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.km_return)) }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(fuel, { fuel = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.fuel_pct)) }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(damages, { damages = it }, label = { Text("D\u00e9g\u00e2ts / \u0623\u0636\u0631\u0627\u0631") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(extras, { extras = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.extra_fees)) }, modifier = Modifier.fillMaxWidth())
             Button(
                 onClick = {
                     vm.closeContract(sel, endKm.toIntOrNull() ?: sel.startKm,
